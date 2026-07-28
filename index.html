@@ -100,22 +100,28 @@
   .hero-content{max-width:520px;}
 
   /* ---------- tiktok coverflow carousel ---------- */
+  .hero-inner{
+    --tt-w:220px;
+    --tt-h:391px;
+    --tt-offset:88px;
+    --tt-carousel-w:340px;
+  }
   .tiktok-carousel{
     position:absolute;
     left:-96px;
     top:50%;
     transform:translateY(-50%);
-    width:340px;
-    height:391px;
+    width:var(--tt-carousel-w);
+    height:var(--tt-h);
   }
   .tiktok-slide{
     position:absolute;
     top:50%;
     left:50%;
-    width:220px;
-    height:391px;
-    margin-top:-195.5px;
-    margin-left:-110px;
+    width:var(--tt-w);
+    height:var(--tt-h);
+    margin-top:calc(var(--tt-h) / -2);
+    margin-left:calc(var(--tt-w) / -2);
     opacity:0;
     pointer-events:none;
     z-index:1;
@@ -148,7 +154,7 @@
   .tiktok-slide.pos-center .tiktok-slide-scale{transform:scale(1);}
 
   .tiktok-slide.pos-right{
-    transform:translateX(88px);
+    transform:translateX(var(--tt-offset));
     opacity:0.5;
     z-index:2;
     transition:transform .5s ease, opacity .5s ease;
@@ -156,7 +162,7 @@
   .tiktok-slide.pos-right .tiktok-slide-scale{transform:scale(0.72);}
 
   .tiktok-slide.pos-left{
-    transform:translateX(-88px);
+    transform:translateX(calc(var(--tt-offset) * -1));
     opacity:0.5;
     z-index:2;
     transition:transform .5s ease, opacity .5s ease;
@@ -186,6 +192,7 @@
     z-index:5;
     opacity:0.85;
     transition:opacity .15s ease, transform .15s ease;
+    -webkit-tap-highlight-color:transparent;
   }
   .tiktok-arrow:hover{opacity:1; transform:translateY(-50%) scale(1.15);}
   .tiktok-arrow:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
@@ -195,15 +202,36 @@
   @media (max-width:720px){
     .hero-inner{
       flex-direction:column;
-      gap:32px;
+      gap:24px;
       position:static;
       min-height:0;
+      padding:0 40px;
+      --tt-w:160px;
+      --tt-h:284px;
+      --tt-offset:64px;
+      --tt-carousel-w:250px;
     }
     .tiktok-carousel{
-      position:static;
+      position:relative;
+      left:auto;
+      top:auto;
       transform:none;
       margin:0 auto;
     }
+    .tiktok-arrow{font-size:26px; padding:6px;}
+    .tiktok-arrow.prev{left:-30px;}
+    .tiktok-arrow.next{right:-30px;}
+  }
+
+  @media (max-width:380px){
+    .hero-inner{
+      --tt-w:135px;
+      --tt-h:240px;
+      --tt-offset:52px;
+      --tt-carousel-w:210px;
+    }
+    .tiktok-arrow.prev{left:-26px;}
+    .tiktok-arrow.next{right:-26px;}
   }
 
   .live-pill{
@@ -452,22 +480,22 @@
     <div class="tiktok-carousel" aria-label="Derniers TikToks de bastouzinho">
       <div class="tiktok-slide" data-slide="0">
         <div class="tiktok-slide-scale">
-          <iframe src="https://www.tiktok.com/player/v1/7659716084756532512?autoplay=1&muted=1&loop=1&controls=0&progress_bar=0&play_button=0&volume_control=0&fullscreen_button=0&timestamp=0&music_info=0&description=0&rel=0&closed_caption=0&native_context_menu=0" allow="autoplay; encrypted-media; fullscreen" title="TikTok bastouzinho 1"></iframe>
+          <iframe src="https://www.tiktok.com/player/v1/7659716084756532512?autoplay=1&muted=1&loop=0&controls=0&progress_bar=0&play_button=0&volume_control=0&fullscreen_button=0&timestamp=0&music_info=0&description=0&rel=0&closed_caption=0&native_context_menu=0" allow="autoplay; encrypted-media; fullscreen" title="TikTok bastouzinho 1"></iframe>
         </div>
       </div>
       <div class="tiktok-slide" data-slide="1">
         <div class="tiktok-slide-scale">
-          <iframe src="https://www.tiktok.com/player/v1/7665575317943225632?autoplay=1&muted=1&loop=1&controls=0&progress_bar=0&play_button=0&volume_control=0&fullscreen_button=0&timestamp=0&music_info=0&description=0&rel=0&closed_caption=0&native_context_menu=0" allow="autoplay; encrypted-media; fullscreen" title="TikTok bastouzinho 2"></iframe>
+          <iframe src="https://www.tiktok.com/player/v1/7665575317943225632?autoplay=1&muted=1&loop=0&controls=0&progress_bar=0&play_button=0&volume_control=0&fullscreen_button=0&timestamp=0&music_info=0&description=0&rel=0&closed_caption=0&native_context_menu=0" allow="autoplay; encrypted-media; fullscreen" title="TikTok bastouzinho 2"></iframe>
         </div>
       </div>
       <div class="tiktok-slide" data-slide="2">
         <div class="tiktok-slide-scale">
-          <iframe src="https://www.tiktok.com/player/v1/7638136920593255702?autoplay=1&muted=1&loop=1&controls=0&progress_bar=0&play_button=0&volume_control=0&fullscreen_button=0&timestamp=0&music_info=0&description=0&rel=0&closed_caption=0&native_context_menu=0" allow="autoplay; encrypted-media; fullscreen" title="TikTok bastouzinho 3"></iframe>
+          <iframe src="https://www.tiktok.com/player/v1/7638136920593255702?autoplay=1&muted=1&loop=0&controls=0&progress_bar=0&play_button=0&volume_control=0&fullscreen_button=0&timestamp=0&music_info=0&description=0&rel=0&closed_caption=0&native_context_menu=0" allow="autoplay; encrypted-media; fullscreen" title="TikTok bastouzinho 3"></iframe>
         </div>
       </div>
       <div class="tiktok-slide" data-slide="3">
         <div class="tiktok-slide-scale">
-          <iframe src="https://www.tiktok.com/player/v1/7658157112303914272?autoplay=1&muted=1&loop=1&controls=0&progress_bar=0&play_button=0&volume_control=0&fullscreen_button=0&timestamp=0&music_info=0&description=0&rel=0&closed_caption=0&native_context_menu=0" allow="autoplay; encrypted-media; fullscreen" title="TikTok bastouzinho 4"></iframe>
+          <iframe src="https://www.tiktok.com/player/v1/7658157112303914272?autoplay=1&muted=1&loop=0&controls=0&progress_bar=0&play_button=0&volume_control=0&fullscreen_button=0&timestamp=0&music_info=0&description=0&rel=0&closed_caption=0&native_context_menu=0" allow="autoplay; encrypted-media; fullscreen" title="TikTok bastouzinho 4"></iframe>
         </div>
       </div>
 
@@ -576,7 +604,8 @@
   const nextBtn = document.querySelector('.tiktok-arrow.next');
   const total = slides.length;
   let current = 0;
-  let autoplay;
+  let paused = false;
+  let fallbackTimer;
 
   function sendToPlayer(iframe, type, value){
     if(!iframe.contentWindow) return;
@@ -594,6 +623,12 @@
     });
   }
 
+  // safety net in case a video's onStateChange never fires (blocked autoplay, load error...)
+  function armFallback(){
+    clearTimeout(fallbackTimer);
+    fallbackTimer = setTimeout(() => { if(!paused) nextSlide(); }, 20000);
+  }
+
   function goToSlide(index){
     const newIndex = (index + total) % total;
     if(newIndex === current) return;
@@ -601,37 +636,43 @@
     current = newIndex;
     render();
     sendToPlayer(iframes[current], 'seekTo', 0);
-    sendToPlayer(iframes[current], 'play');
+    if(!paused) sendToPlayer(iframes[current], 'play');
+    armFallback();
   }
 
   function nextSlide(){ goToSlide(current + 1); }
   function prevSlide(){ goToSlide(current - 1); }
 
-  function startAutoplay(){ autoplay = setInterval(nextSlide, 8000); }
-  function stopAutoplay(){ clearInterval(autoplay); }
-  function restartAutoplay(){ stopAutoplay(); startAutoplay(); }
+  function pauseCurrent(){ paused = true; clearTimeout(fallbackTimer); sendToPlayer(iframes[current], 'pause'); }
+  function resumeCurrent(){ paused = false; sendToPlayer(iframes[current], 'play'); armFallback(); }
 
-  // pause every player as soon as it's ready, except the centered one
   window.addEventListener('message', (event) => {
     if(!event.data || !event.data['x-tiktok-player']) return;
+    const sourceIframe = Array.from(iframes).find(f => f.contentWindow === event.source);
+    if(!sourceIframe) return;
+
     if(event.data.type === 'onPlayerReady'){
-      const readyIframe = Array.from(iframes).find(f => f.contentWindow === event.source);
-      if(readyIframe && readyIframe !== iframes[current]){
-        sendToPlayer(readyIframe, 'pause');
-      }
+      // keep every player paused except the one currently centered
+      if(sourceIframe !== iframes[current]) sendToPlayer(sourceIframe, 'pause');
+      else armFallback();
+    }
+
+    // advance only once the CENTERED video actually finishes — each video keeps its own real length
+    if(event.data.type === 'onStateChange' && event.data.value === 0 && sourceIframe === iframes[current]){
+      nextSlide();
     }
   });
 
   if(nextBtn && prevBtn){
-    nextBtn.addEventListener('click', () => { nextSlide(); restartAutoplay(); });
-    prevBtn.addEventListener('click', () => { prevSlide(); restartAutoplay(); });
+    nextBtn.addEventListener('click', () => { nextSlide(); });
+    prevBtn.addEventListener('click', () => { prevSlide(); });
   }
 
   if(carousel){
-    carousel.addEventListener('mouseenter', stopAutoplay);
-    carousel.addEventListener('mouseleave', startAutoplay);
+    carousel.addEventListener('mouseenter', pauseCurrent);
+    carousel.addEventListener('mouseleave', resumeCurrent);
     render();
-    startAutoplay();
+    armFallback();
   }
 </script>
 
