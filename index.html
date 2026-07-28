@@ -102,30 +102,29 @@
     position:relative;
     flex-shrink:0;
     width:220px;
-    height:460px;
+    height:391px;
     border-radius:16px;
     overflow:hidden;
     border:1px solid var(--border-strong);
-    background:var(--bg-1);
+    background:#000;
   }
   .tiktok-slide{
     position:absolute;
     inset:0;
     opacity:0;
     pointer-events:none;
-    transition:opacity .4s ease;
-    display:flex;
-    align-items:flex-start;
-    justify-content:center;
-    overflow:hidden;
+    transition:opacity .5s ease;
   }
   .tiktok-slide.active{
     opacity:1;
     pointer-events:auto;
     z-index:2;
   }
-  .tiktok-slide blockquote.tiktok-embed{
-    margin:0 !important;
+  .tiktok-slide iframe{
+    display:block;
+    width:100%;
+    height:100%;
+    border:none;
   }
   .tiktok-arrow{
     position:absolute;
@@ -155,7 +154,7 @@
 
   @media (max-width:720px){
     .hero-inner{flex-direction:column; gap:32px;}
-    .tiktok-carousel{width:200px; height:420px;}
+    .tiktok-carousel{width:220px; height:391px;}
   }
 
   .live-pill{
@@ -403,24 +402,16 @@
 
     <div class="tiktok-carousel" aria-label="Derniers TikToks de bastouzinho">
       <div class="tiktok-slide active" data-slide="0">
-        <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@bastouzinho/video/7659716084756532512" data-video-id="7659716084756532512" style="max-width:220px;min-width:220px;">
-          <section></section>
-        </blockquote>
+        <iframe src="https://www.tiktok.com/player/v1/7659716084756532512?autoplay=1&muted=1&loop=1&controls=0&progress_bar=0&play_button=0&volume_control=0&fullscreen_button=0&timestamp=0&music_info=0&description=0&rel=0&closed_caption=0&native_context_menu=0" allow="autoplay; encrypted-media; fullscreen" title="TikTok bastouzinho 1"></iframe>
       </div>
       <div class="tiktok-slide" data-slide="1">
-        <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@bastouzinho/video/7665575317943225632" data-video-id="7665575317943225632" style="max-width:220px;min-width:220px;">
-          <section></section>
-        </blockquote>
+        <iframe src="https://www.tiktok.com/player/v1/7665575317943225632?autoplay=1&muted=1&loop=1&controls=0&progress_bar=0&play_button=0&volume_control=0&fullscreen_button=0&timestamp=0&music_info=0&description=0&rel=0&closed_caption=0&native_context_menu=0" allow="autoplay; encrypted-media; fullscreen" title="TikTok bastouzinho 2"></iframe>
       </div>
       <div class="tiktok-slide" data-slide="2">
-        <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@bastouzinho/video/7638136920593255702" data-video-id="7638136920593255702" style="max-width:220px;min-width:220px;">
-          <section></section>
-        </blockquote>
+        <iframe src="https://www.tiktok.com/player/v1/7638136920593255702?autoplay=1&muted=1&loop=1&controls=0&progress_bar=0&play_button=0&volume_control=0&fullscreen_button=0&timestamp=0&music_info=0&description=0&rel=0&closed_caption=0&native_context_menu=0" allow="autoplay; encrypted-media; fullscreen" title="TikTok bastouzinho 3"></iframe>
       </div>
       <div class="tiktok-slide" data-slide="3">
-        <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@bastouzinho/video/7658157112303914272" data-video-id="7658157112303914272" style="max-width:220px;min-width:220px;">
-          <section></section>
-        </blockquote>
+        <iframe src="https://www.tiktok.com/player/v1/7658157112303914272?autoplay=1&muted=1&loop=1&controls=0&progress_bar=0&play_button=0&volume_control=0&fullscreen_button=0&timestamp=0&music_info=0&description=0&rel=0&closed_caption=0&native_context_menu=0" allow="autoplay; encrypted-media; fullscreen" title="TikTok bastouzinho 4"></iframe>
       </div>
 
       <button class="tiktok-arrow prev" aria-label="TikTok précédent">‹</button>
@@ -442,8 +433,6 @@
 
   </div>
 </section>
-
-<script async src="https://www.tiktok.com/embed.js"></script>
 
 <section class="section" id="content">
   <div class="wrap">
@@ -525,37 +514,45 @@
 <script>
   const carousel = document.querySelector('.tiktok-carousel');
   const slides = document.querySelectorAll('.tiktok-slide');
+  const iframes = document.querySelectorAll('.tiktok-slide iframe');
   const prevBtn = document.querySelector('.tiktok-arrow.prev');
   const nextBtn = document.querySelector('.tiktok-arrow.next');
   let current = 0;
   let autoplay;
 
+  function sendToPlayer(iframe, type, value){
+    if(!iframe.contentWindow) return;
+    iframe.contentWindow.postMessage({ type, value, 'x-tiktok-player': true }, '*');
+  }
+
   function goToSlide(index){
-    slides.forEach(s => s.classList.remove('active'));
+    if(index === current) return;
+    sendToPlayer(iframes[current], 'pause');
+    slides[current].classList.remove('active');
+
     slides[index].classList.add('active');
+    sendToPlayer(iframes[index], 'seekTo', 0);
+    sendToPlayer(iframes[index], 'play');
     current = index;
   }
 
-  function nextSlide(){
-    goToSlide((current + 1) % slides.length);
-  }
+  function nextSlide(){ goToSlide((current + 1) % slides.length); }
+  function prevSlide(){ goToSlide((current - 1 + slides.length) % slides.length); }
 
-  function prevSlide(){
-    goToSlide((current - 1 + slides.length) % slides.length);
-  }
+  function startAutoplay(){ autoplay = setInterval(nextSlide, 8000); }
+  function stopAutoplay(){ clearInterval(autoplay); }
+  function restartAutoplay(){ stopAutoplay(); startAutoplay(); }
 
-  function startAutoplay(){
-    autoplay = setInterval(nextSlide, 6000);
-  }
-
-  function stopAutoplay(){
-    clearInterval(autoplay);
-  }
-
-  function restartAutoplay(){
-    stopAutoplay();
-    startAutoplay();
-  }
+  // pause every player as soon as it's ready, except the first one
+  window.addEventListener('message', (event) => {
+    if(!event.data || !event.data['x-tiktok-player']) return;
+    if(event.data.type === 'onPlayerReady'){
+      const readyIframe = Array.from(iframes).find(f => f.contentWindow === event.source);
+      if(readyIframe && readyIframe !== iframes[current]){
+        sendToPlayer(readyIframe, 'pause');
+      }
+    }
+  });
 
   if(nextBtn && prevBtn){
     nextBtn.addEventListener('click', () => { nextSlide(); restartAutoplay(); });
