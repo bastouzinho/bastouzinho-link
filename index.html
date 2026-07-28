@@ -356,19 +356,25 @@
 
   /* réseaux list */
   .network-list{
-    border:1px solid var(--border);
-    border-radius:10px;
-    overflow:hidden;
-    background:var(--bg-1);
+    display:flex;
+    flex-direction:column;
+    gap:8px;
   }
   .network-row{
     display:flex;
     align-items:center;
     gap:14px;
     padding:17px 18px;
-    border-bottom:1px solid var(--border);
+    border:1px solid var(--border);
+    border-radius:10px;
+    background:var(--bg-1);
+    transition:border-color .2s ease, box-shadow .2s ease, background .2s ease;
   }
-  .network-row:last-child{border-bottom:none;}
+  .network-row:hover{
+    border-color:var(--accent);
+    background:var(--bg-2);
+    box-shadow:0 0 0 1px var(--accent), 0 0 18px rgba(177,156,217,0.35);
+  }
   .network-icon{
     width:23px;
     height:23px;
