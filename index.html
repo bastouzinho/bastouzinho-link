@@ -640,19 +640,6 @@
     position:relative;
     overflow:hidden;
   }
-  .about-index{
-    position:absolute;
-    top:-0.35em;
-    left:-0.05em;
-    font-family:'Space Grotesk',sans-serif;
-    font-weight:700;
-    font-size:220px;
-    line-height:1;
-    color:var(--bg-1);
-    z-index:0;
-    pointer-events:none;
-    user-select:none;
-  }
   .about-inner{
     position:relative;
     z-index:1;
@@ -713,7 +700,6 @@
     max-width:560px;
   }
   @media (max-width:640px){
-    .about-index{display:none;}
     .about-inner{grid-template-columns:1fr; justify-items:center; text-align:center; row-gap:28px;}
     .about-avatar-wrap::before{display:none;}
     .about-text{margin-top:0;}
@@ -870,7 +856,6 @@
 
 <!-- ============ SECTION À PROPOS — remplace le texte et la photo ci-dessous ============ -->
 <section class="about" id="a-propos">
-  <div class="about-index" aria-hidden="true">01</div>
   <div class="wrap about-inner">
     <div class="about-avatar-wrap">
       <div class="about-avatar">
