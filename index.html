@@ -674,6 +674,23 @@
     render();
     armFallback();
   }
+
+  // Sur mobile, les navigateurs bloquent l'autoplay tant qu'aucune interaction
+  // n'a eu lieu. On écoute donc le tout premier tap/scroll/clic sur la page
+  // (pas besoin d'un bouton dédié) pour lancer la vidéo centrale à ce moment-là.
+  let mobileUnlocked = false;
+  function unlockMobileAutoplay(){
+    if(mobileUnlocked) return;
+    mobileUnlocked = true;
+    sendToPlayer(iframes[current], 'play');
+    armFallback();
+    window.removeEventListener('touchstart', unlockMobileAutoplay);
+    window.removeEventListener('click', unlockMobileAutoplay);
+    window.removeEventListener('scroll', unlockMobileAutoplay);
+  }
+  window.addEventListener('touchstart', unlockMobileAutoplay, { once:true, passive:true });
+  window.addEventListener('click', unlockMobileAutoplay, { once:true });
+  window.addEventListener('scroll', unlockMobileAutoplay, { once:true, passive:true });
 </script>
 
 <footer>
