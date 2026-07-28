@@ -87,20 +87,24 @@
   }
 
   .hero-inner{
+    position:relative;
     display:flex;
     align-items:center;
-    justify-content:space-between;
-    gap:64px;
-    max-width:1140px;
+    justify-content:center;
+    max-width:1240px;
     margin:0 auto;
+    padding:0 16px;
+    min-height:391px;
   }
 
-  .hero-content{flex:1; min-width:0;}
+  .hero-content{max-width:520px;}
 
   /* ---------- tiktok carousel ---------- */
   .tiktok-carousel{
-    position:relative;
-    flex-shrink:0;
+    position:absolute;
+    left:16px;
+    top:50%;
+    transform:translateY(-50%);
     width:220px;
     height:391px;
     border-radius:16px;
@@ -153,8 +157,17 @@
   .tiktok-arrow.next{right:8px;}
 
   @media (max-width:720px){
-    .hero-inner{flex-direction:column; gap:32px;}
-    .tiktok-carousel{width:220px; height:391px;}
+    .hero-inner{
+      flex-direction:column;
+      gap:32px;
+      position:static;
+      min-height:0;
+    }
+    .tiktok-carousel{
+      position:static;
+      transform:none;
+      margin:0 auto;
+    }
   }
 
   .live-pill{
