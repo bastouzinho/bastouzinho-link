@@ -17,8 +17,8 @@
     --text-primary:#ededef;
     --text-secondary:#8f8f96;
     --text-muted:#5c5c61;
-    --accent:#a855f7;
-    --accent-dim:#4c1d7a;
+    --accent:#b19cd9;
+    --accent-dim:#5b4b7a;
   }
 
   *{margin:0;padding:0;box-sizing:border-box;}
@@ -86,6 +86,78 @@
     border-bottom:1px solid var(--border);
   }
 
+  .hero-inner{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:64px;
+    max-width:1140px;
+    margin:0 auto;
+  }
+
+  .hero-content{flex:1; min-width:0;}
+
+  /* ---------- tiktok carousel ---------- */
+  .tiktok-carousel{
+    position:relative;
+    flex-shrink:0;
+    width:220px;
+    height:460px;
+    border-radius:16px;
+    overflow:hidden;
+    border:1px solid var(--border-strong);
+    background:var(--bg-1);
+  }
+  .tiktok-slide{
+    position:absolute;
+    inset:0;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .4s ease;
+    display:flex;
+    align-items:flex-start;
+    justify-content:center;
+    overflow:hidden;
+  }
+  .tiktok-slide.active{
+    opacity:1;
+    pointer-events:auto;
+    z-index:2;
+  }
+  .tiktok-slide blockquote.tiktok-embed{
+    margin:0 !important;
+  }
+  .tiktok-arrow{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    width:34px;
+    height:34px;
+    border-radius:50%;
+    border:none;
+    background:var(--accent);
+    color:#211a30;
+    font-family:'JetBrains Mono',monospace;
+    font-size:16px;
+    line-height:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    z-index:5;
+    opacity:0.92;
+    transition:opacity .15s ease, background .15s ease;
+  }
+  .tiktok-arrow:hover{background:#cabce4; opacity:1;}
+  .tiktok-arrow:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
+  .tiktok-arrow.prev{left:8px;}
+  .tiktok-arrow.next{right:8px;}
+
+  @media (max-width:720px){
+    .hero-inner{flex-direction:column; gap:32px;}
+    .tiktok-carousel{width:200px; height:420px;}
+  }
+
   .live-pill{
     display:inline-flex;
     align-items:center;
@@ -107,8 +179,8 @@
     animation:pulse 1.8s ease-in-out infinite;
   }
   @keyframes pulse{
-    0%,100%{opacity:1; box-shadow:0 0 0 0 rgba(168,85,247,0.5);}
-    50%{opacity:.55; box-shadow:0 0 0 5px rgba(168,85,247,0);}
+    0%,100%{opacity:1; box-shadow:0 0 0 0 rgba(177,156,217,0.5);}
+    50%{opacity:.55; box-shadow:0 0 0 5px rgba(177,156,217,0);}
   }
   @media (prefers-reduced-motion: reduce){
     .dot{animation:none;}
@@ -158,10 +230,10 @@
   .btn-primary{
     background:var(--accent);
     border-color:var(--accent);
-    color:#180a26;
+    color:#211a30;
     font-weight:500;
   }
-  .btn-primary:hover{background:#c084fc; border-color:#c084fc;}
+  .btn-primary:hover{background:#cabce4; border-color:#cabce4;}
   .btn:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
 
   /* ---------- platforms / signature HUD grid ---------- */
@@ -290,7 +362,7 @@
   }
   .tab-btn:hover{color:var(--text-primary);}
   .tab-btn.active{
-    color:#180a26;
+    color:#211a30;
     background:var(--accent);
   }
   .tab-btn:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
@@ -327,24 +399,56 @@
 </header>
 
 <section class="hero" id="top">
-  <div class="wrap">
-    <div class="live-pill">
-      <span class="dot" aria-hidden="true"></span>
-      <span id="status-text">hors ligne — prochain live bientôt</span>
+  <div class="wrap hero-inner">
+
+    <div class="tiktok-carousel" aria-label="Derniers TikToks de bastouzinho">
+      <div class="tiktok-slide active" data-slide="0">
+        <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@bastouzinho/video/7659716084756532512" data-video-id="7659716084756532512" style="max-width:220px;min-width:220px;">
+          <section></section>
+        </blockquote>
+      </div>
+      <div class="tiktok-slide" data-slide="1">
+        <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@bastouzinho/video/7665575317943225632" data-video-id="7665575317943225632" style="max-width:220px;min-width:220px;">
+          <section></section>
+        </blockquote>
+      </div>
+      <div class="tiktok-slide" data-slide="2">
+        <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@bastouzinho/video/7638136920593255702" data-video-id="7638136920593255702" style="max-width:220px;min-width:220px;">
+          <section></section>
+        </blockquote>
+      </div>
+      <div class="tiktok-slide" data-slide="3">
+        <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@bastouzinho/video/7658157112303914272" data-video-id="7658157112303914272" style="max-width:220px;min-width:220px;">
+          <section></section>
+        </blockquote>
+      </div>
+
+      <button class="tiktok-arrow prev" aria-label="TikTok précédent">‹</button>
+      <button class="tiktok-arrow next" aria-label="TikTok suivant">›</button>
     </div>
-    <h1>bastouzinho<span class="accent-dot">_</span></h1>
-    <p>Gaming, discussions et un peu de chaos en direct. Rejoins la communauté sur Twitch et Discord.</p>
-    <div class="hero-actions">
-      <a class="btn btn-primary" href="https://twitch.tv/bastouzinho" target="_blank" rel="noopener">regarder sur twitch</a>
-      <a class="btn" href="https://discord.gg/bastouzinho" target="_blank" rel="noopener">rejoindre le discord</a>
+
+    <div class="hero-content">
+      <div class="live-pill">
+        <span class="dot" aria-hidden="true"></span>
+        <span id="status-text">hors ligne — prochain live bientôt</span>
+      </div>
+      <h1>bastouzinho<span class="accent-dot">_</span></h1>
+      <p>Gaming, discussions et un peu de chaos en direct. Rejoins la communauté sur Twitch et Discord.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="https://twitch.tv/bastouzinho" target="_blank" rel="noopener">regarder sur twitch</a>
+        <a class="btn" href="https://discord.gg/bastouzinho" target="_blank" rel="noopener">rejoindre le discord</a>
+      </div>
     </div>
+
   </div>
 </section>
+
+<script async src="https://www.tiktok.com/embed.js"></script>
 
 <section class="section" id="content">
   <div class="wrap">
     <div class="tabs-nav" role="tablist" aria-label="Sections">
-      <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="panel-chaines" id="tab-chaines" data-tab="chaines">reseaux</button>
+      <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="panel-chaines" id="tab-chaines" data-tab="chaines">chaînes</button>
       <button class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-planning" id="tab-planning" data-tab="planning">planning</button>
     </div>
 
@@ -416,6 +520,53 @@
       document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
     });
   });
+</script>
+
+<script>
+  const carousel = document.querySelector('.tiktok-carousel');
+  const slides = document.querySelectorAll('.tiktok-slide');
+  const prevBtn = document.querySelector('.tiktok-arrow.prev');
+  const nextBtn = document.querySelector('.tiktok-arrow.next');
+  let current = 0;
+  let autoplay;
+
+  function goToSlide(index){
+    slides.forEach(s => s.classList.remove('active'));
+    slides[index].classList.add('active');
+    current = index;
+  }
+
+  function nextSlide(){
+    goToSlide((current + 1) % slides.length);
+  }
+
+  function prevSlide(){
+    goToSlide((current - 1 + slides.length) % slides.length);
+  }
+
+  function startAutoplay(){
+    autoplay = setInterval(nextSlide, 6000);
+  }
+
+  function stopAutoplay(){
+    clearInterval(autoplay);
+  }
+
+  function restartAutoplay(){
+    stopAutoplay();
+    startAutoplay();
+  }
+
+  if(nextBtn && prevBtn){
+    nextBtn.addEventListener('click', () => { nextSlide(); restartAutoplay(); });
+    prevBtn.addEventListener('click', () => { prevSlide(); restartAutoplay(); });
+  }
+
+  if(carousel){
+    carousel.addEventListener('mouseenter', stopAutoplay);
+    carousel.addEventListener('mouseleave', startAutoplay);
+    startAutoplay();
+  }
 </script>
 
 <footer>
