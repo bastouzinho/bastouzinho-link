@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bastouzinho Corp</title>
+<title>bastouzinho</title>
 <meta name="description" content="Gaming, discussions et un peu de chaos en direct. Rejoins la communauté sur Twitch et Discord.">
 
 <!-- Favicon en SVG inline (pas de fichier externe nécessaire) -->
@@ -357,13 +357,37 @@
     .dot{animation:none;}
   }
 
+  .hero-kicker{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--text-muted);
+    margin-bottom:18px;
+  }
+
   .hero h1{
+    display:flex;
+    flex-wrap:nowrap;
+    justify-content:center;
+    align-items:baseline;
+    column-gap:0.12em;
+    line-height:0.95;
+    white-space:nowrap;
+  }
+  .h1-big{
     font-family:'Space Grotesk',sans-serif;
     font-weight:700;
-    font-size:clamp(52px,8vw,80px);
+    font-size:clamp(38px,8vw,76px);
     letter-spacing:-0.03em;
-    line-height:0.95;
     color:var(--text-primary);
+  }
+  .h1-accent{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:clamp(38px,8vw,76px);
+    letter-spacing:-0.03em;
+    color:var(--accent);
   }
   .hero h1 .accent-dot{color:var(--accent);}
 
@@ -447,25 +471,31 @@
     align-items:center;
     gap:14px;
     padding:17px 18px;
-    border:1px solid var(--border);
+    border:1px solid transparent;
     border-radius:10px;
-    background:var(--bg-1);
+    background:
+      linear-gradient(var(--bg-1), var(--bg-1)) padding-box,
+      linear-gradient(135deg, var(--border-strong), var(--border) 40%, var(--border) 60%, var(--border-strong)) border-box;
     text-decoration:none;
     transition:border-color .2s ease, box-shadow .2s ease, background .2s ease;
   }
   .network-row:hover{
-    border-color:var(--accent);
-    background:var(--bg-2);
-    box-shadow:0 0 0 1px var(--accent), 0 0 18px rgba(177,156,217,0.35);
+    border:1px solid transparent;
+    background:
+      linear-gradient(var(--bg-2), var(--bg-2)) padding-box,
+      linear-gradient(135deg, var(--accent), var(--accent-dim) 50%, var(--accent)) border-box;
+    box-shadow:0 0 0 1px transparent, 0 0 18px rgba(177,156,217,0.35);
   }
   .network-row:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
 
   .network-row.disabled{
     cursor:default;
     opacity:0.5;
+    border:1px solid var(--border);
+    background:var(--bg-1);
   }
   .network-row.disabled:hover{
-    border-color:var(--accent);
+    border:1px solid var(--accent);
     background:var(--bg-1);
     box-shadow:0 0 0 1px var(--accent), 0 0 18px rgba(177,156,217,0.35);
   }
@@ -511,10 +541,12 @@
 
   /* planning list */
   .side-schedule{
-    border:1px solid var(--border);
+    border:1px solid transparent;
     border-radius:10px;
     overflow:hidden;
-    background:var(--bg-1);
+    background:
+      linear-gradient(var(--bg-1), var(--bg-1)) padding-box,
+      linear-gradient(160deg, var(--border-strong), var(--border) 45%, var(--border) 55%, var(--border-strong)) border-box;
   }
   .day-row{
     display:flex;
@@ -605,18 +637,47 @@
   .about{
     padding:96px 0;
     border-bottom:1px solid var(--border);
+    position:relative;
+    overflow:hidden;
+  }
+  .about-index{
+    position:absolute;
+    top:-0.35em;
+    left:-0.05em;
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:220px;
+    line-height:1;
+    color:var(--bg-1);
+    z-index:0;
+    pointer-events:none;
+    user-select:none;
   }
   .about-inner{
-    display:flex;
-    align-items:center;
-    gap:56px;
-    max-width:900px;
+    position:relative;
+    z-index:1;
+    display:grid;
+    grid-template-columns:200px 1fr;
+    column-gap:64px;
+    align-items:start;
+    max-width:960px;
     margin:0 auto;
   }
+  .about-avatar-wrap{
+    position:relative;
+  }
+  .about-avatar-wrap::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    border:1px solid var(--border-strong);
+    border-radius:50%;
+    transform:translate(16px,-16px);
+    z-index:-1;
+  }
   .about-avatar{
-    width:160px;
-    height:160px;
-    flex-shrink:0;
+    width:180px;
+    height:180px;
     border-radius:50%;
     border:1px solid var(--border-strong);
     background:var(--bg-1);
@@ -625,7 +686,7 @@
     justify-content:center;
     font-family:'Space Grotesk',sans-serif;
     font-weight:700;
-    font-size:44px;
+    font-size:48px;
     color:var(--accent);
     overflow:hidden;
   }
@@ -635,11 +696,14 @@
     object-fit:cover;
     display:block;
   }
+  .about-text{
+    margin-top:42px;
+  }
   .about-text .side-panel-title{margin-bottom:14px;}
   .about-text h2{
     font-family:'Space Grotesk',sans-serif;
     font-weight:700;
-    font-size:28px;
+    font-size:32px;
     letter-spacing:-0.02em;
     margin-bottom:14px;
   }
@@ -649,7 +713,10 @@
     max-width:560px;
   }
   @media (max-width:640px){
-    .about-inner{flex-direction:column; text-align:center; gap:28px;}
+    .about-index{display:none;}
+    .about-inner{grid-template-columns:1fr; justify-items:center; text-align:center; row-gap:28px;}
+    .about-avatar-wrap::before{display:none;}
+    .about-text{margin-top:0;}
     .about-text p{max-width:100%;}
   }
 
@@ -737,7 +804,8 @@
         <span class="dot" aria-hidden="true"></span>
         <span id="status-text">hors ligne — prochain live bientôt</span>
       </div>
-      <h1>bastouzinho</h1>
+      <div class="hero-kicker">gaming · live · communauté</div>
+      <h1><span class="h1-big">bastou</span><span class="h1-accent">zinho</span></h1>
       <p>Gaming, discussions et un peu de chaos en direct. Rejoins la communauté sur Twitch et Discord.</p>
       <div class="hero-actions">
         <a class="btn btn-primary" href="https://twitch.tv/bastouzinho" target="_blank" rel="noopener">regarder sur twitch</a>
@@ -802,10 +870,12 @@
 
 <!-- ============ SECTION À PROPOS — remplace le texte et la photo ci-dessous ============ -->
 <section class="about" id="a-propos">
+  <div class="about-index" aria-hidden="true">01</div>
   <div class="wrap about-inner">
-    <div class="about-avatar">
-      <!-- Remplace ce bloc par : <img src="ton-avatar.jpg" alt="bastouzinho"> -->
-      B
+    <div class="about-avatar-wrap">
+      <div class="about-avatar">
+        <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/ee2641df-e1bd-4973-a530-f281521c3d8e-profile_image-70x70.png" alt="bastouzinho" referrerpolicy="no-referrer" loading="eager" onerror="this.replaceWith(document.createTextNode('B'))">
+      </div>
     </div>
     <div class="about-text">
       <div class="side-panel-title">[ à propos ]</div>
