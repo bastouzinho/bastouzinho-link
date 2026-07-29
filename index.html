@@ -173,18 +173,25 @@
   }
   .hero-glow-inner{
     position:absolute;
-    inset:-10%;
+    inset:-10% 0;
+    display:flex;
+    width:200%;
+    height:120%;
+    filter:blur(40px);
+    animation:glow-shift 24s linear infinite;
+  }
+  .glow-tile{
+    width:50%;
+    height:100%;
+    flex-shrink:0;
     background:
       radial-gradient(38% 45% at 22% 30%, rgba(255,183,3,0.15), transparent 70%),
       radial-gradient(32% 38% at 80% 68%, rgba(255,61,110,0.16), transparent 70%),
       radial-gradient(50% 60% at 50% 100%, rgba(255,183,3,0.05), transparent 75%);
-    filter:blur(40px);
-    animation:glow-drift 18s ease-in-out infinite;
   }
-  @keyframes glow-drift{
-    0%,100%{ transform:translate(0,0) scale(1); opacity:0.9; }
-    33%{ transform:translate(2%,-3%) scale(1.06); opacity:1; }
-    66%{ transform:translate(-2%,2%) scale(0.98); opacity:0.85; }
+  @keyframes glow-shift{
+    from{ transform:translateX(-50%); }
+    to{ transform:translateX(0%); }
   }
 
   /* grain léger en mouvement */
@@ -212,7 +219,7 @@
     100%{transform:translate(0,0);}
   }
   @media (prefers-reduced-motion: reduce){
-    .hero-glow, .hero-grain{animation:none;}
+    .hero-grain{animation:none;}
   }
 
   .hero-inner{
@@ -673,77 +680,50 @@
     .hero{padding:64px 0 56px;}
   }
 
-  /* ---------- section à propos ---------- */
-  .about{
-    padding:96px 0;
-    border-bottom:1px solid var(--border);
-    position:relative;
-    overflow:hidden;
+  /* ---------- panneau à propos (compact, dans la colonne du hero) ---------- */
+  .about-mini{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    padding:17px 18px;
+    border:1px solid transparent;
+    border-radius:10px;
+    background:
+      linear-gradient(var(--bg-1), var(--bg-1)) padding-box,
+      linear-gradient(135deg, var(--border-strong), var(--border) 40%, var(--border) 60%, var(--border-strong)) border-box;
   }
-  .about-inner{
-    position:relative;
-    z-index:1;
-    display:grid;
-    grid-template-columns:200px 1fr;
-    column-gap:64px;
-    align-items:start;
-    max-width:960px;
-    margin:0 auto;
-  }
-  .about-avatar-wrap{
-    position:relative;
-  }
-  .about-avatar-wrap::before{
-    content:"";
-    position:absolute;
-    inset:0;
-    border:1px solid var(--border-strong);
-    border-radius:50%;
-    transform:translate(16px,-16px);
-    z-index:-1;
-  }
-  .about-avatar{
-    width:180px;
-    height:180px;
+  .about-mini-avatar{
+    width:56px;
+    height:56px;
+    flex-shrink:0;
     border-radius:50%;
     border:1px solid var(--border-strong);
-    background:var(--bg-1);
+    background:var(--bg-2);
     display:flex;
     align-items:center;
     justify-content:center;
     font-family:'Bungee',sans-serif;
     font-weight:400;
-    font-size:44px;
+    font-size:20px;
     color:var(--accent);
     overflow:hidden;
   }
-  .about-avatar img{
+  .about-mini-avatar img{
     width:100%;
     height:100%;
     object-fit:cover;
     display:block;
   }
-  .about-text{
-    margin-top:42px;
+  .about-mini-name{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:600;
+    font-size:15px;
+    color:var(--text-primary);
+    margin-bottom:4px;
   }
-  .about-text .side-panel-title{margin-bottom:14px;}
-  .about-text h2{
-    font-family:'Bungee',sans-serif;
-    font-weight:400;
-    font-size:28px;
-    letter-spacing:0.005em;
-    margin-bottom:14px;
-  }
-  .about-text p{
+  .about-mini-text{
     color:var(--text-secondary);
-    font-size:16px;
-    max-width:560px;
-  }
-  @media (max-width:640px){
-    .about-inner{grid-template-columns:1fr; justify-items:center; text-align:center; row-gap:28px;}
-    .about-avatar-wrap::before{display:none;}
-    .about-text{margin-top:0;}
-    .about-text p{max-width:100%;}
+    font-size:14px;
   }
 
   /* ---------- curseur custom ---------- */
@@ -790,12 +770,13 @@
     <nav class="tabs-nav" role="tablist" aria-label="Sections">
       <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="panel-reseaux" id="tab-reseaux" data-tab="reseaux">réseaux</button>
       <button class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-planning" id="tab-planning" data-tab="planning">planning</button>
+      <button class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-apropos" id="tab-apropos" data-tab="apropos">à propos</button>
     </nav>
   </div>
 </header>
 
 <section class="hero" id="top">
-  <div class="hero-glow" aria-hidden="true"><div class="hero-glow-inner"></div></div>
+  <div class="hero-glow" aria-hidden="true"><div class="hero-glow-inner"><div class="glow-tile"></div><div class="glow-tile"></div></div></div>
   <div class="hero-grain" aria-hidden="true"></div>
   <div class="wrap hero-inner">
 
@@ -889,27 +870,25 @@
           <div class="day-row off"><span class="day-row-name">dimanche</span><span class="day-row-time">—</span></div>
         </div>
       </div>
-    </div>
 
-  </div>
-</section>
-
-<!-- ============ SECTION À PROPOS — remplace le texte et la photo ci-dessous ============ -->
-<section class="about" id="a-propos">
-  <div class="wrap about-inner">
-    <div class="about-avatar-wrap">
-      <div class="about-avatar">
-        <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/ee2641df-e1bd-4973-a530-f281521c3d8e-profile_image-70x70.png" alt="bastouzinho" referrerpolicy="no-referrer" loading="eager" onerror="this.replaceWith(document.createTextNode('B'))">
+      <!-- ============ PANNEAU À PROPOS — remplace le texte et la photo ci-dessous ============ -->
+      <div class="side-panel" id="panel-apropos" role="tabpanel" aria-labelledby="tab-apropos">
+        <div class="side-panel-title">[ à propos ]</div>
+        <div class="about-mini">
+          <div class="about-mini-avatar">
+            <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/ee2641df-e1bd-4973-a530-f281521c3d8e-profile_image-70x70.png" alt="bastouzinho" referrerpolicy="no-referrer" loading="eager" onerror="this.replaceWith(document.createTextNode('B'))">
+          </div>
+          <div>
+            <div class="about-mini-name">bastouzinho</div>
+            <p class="about-mini-text">j'aime le popcorn</p>
+          </div>
+        </div>
       </div>
+      <!-- ============ FIN PANNEAU À PROPOS ============ -->
     </div>
-    <div class="about-text">
-      <div class="side-panel-title">[ à propos ]</div>
-      <h2>bastouzinho</h2>
-      <p>j'aime le popcorn</p>
-    </div>
+
   </div>
 </section>
-<!-- ============ FIN SECTION À PROPOS ============ -->
 
 <script>
   // fade-in au premier chargement de la page
